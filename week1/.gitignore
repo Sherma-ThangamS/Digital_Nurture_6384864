@@ -1,0 +1,10 @@
+# Ignore all .class files
+*.class
+
+# Ignore all .idea directories
+.idea/
+**/.idea/
+
+.idea/
+
+**/bin/
