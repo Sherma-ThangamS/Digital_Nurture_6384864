@@ -1,0 +1,15 @@
+package code.week1.StrategyPatternExample;
+
+public class PayPalPayment implements PaymentStrategy {
+    private String email;
+
+    public PayPalPayment(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public void pay(double amount) {
+        System.out.println("Paid $" + amount + " using PayPal.");
+        System.out.println("PayPal Account: " + email);
+    }
+}
