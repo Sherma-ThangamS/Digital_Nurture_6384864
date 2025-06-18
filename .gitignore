@@ -8,3 +8,7 @@
 .idea/
 
 **/bin/
+
+**/out/
+
+*.iml
