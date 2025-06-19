@@ -1,3 +1,25 @@
+/*
+
+    O(n): Linear time – common in loops or linear searches.
+
+    O(log n): Logarithmic time – used in binary search, trees.
+
+    O(1): Constant time – like direct array access.
+
+    Binary search is faster than linear search for large sorted arrays.
+
+    Use binary search when:
+
+    Products are sorted by name.
+
+    Search is frequent (as in real-world e-commerce).
+
+    You can afford to sort once and search many times.
+
+ */
+
+
+
 import java.util.Arrays;
 
 public class ECommerceSearch {
