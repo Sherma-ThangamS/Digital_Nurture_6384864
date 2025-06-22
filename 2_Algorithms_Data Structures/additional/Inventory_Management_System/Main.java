@@ -2,6 +2,27 @@
 // This project demonstrates how to efficiently manage warehouse inventory using proper data structures.
 // It focuses on fast data access, modification, and scalability for large-scale product lists.
 
+/*
+
+Why Data Structures and Algorithms Matter
+
+In a warehouse with thousands or even millions of products, managing inventory efficiently is critical. Proper data structures:
+
+    Speed up data retrieval (e.g., searching for a product by ID).
+
+    Reduce memory usage by storing data efficiently.
+
+    Allow fast updates to stock levels or product details.
+
+    Ensure scalability as inventory grows.
+
+    Data structures suitable for this problem : HashMap
+    Because:
+        Lookup by product ID
+        Fast add/update/delete/search (avg O(1))
+
+
+ */
 public class Main {
     public static void main(String[] args) {
 
