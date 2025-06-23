@@ -7,19 +7,20 @@ Scenario 1:
 
     Answer:
 
-        begin 
+        BEGIN
+            FOR loan_rec IN (
+                SELECT l.LoanID
+                FROM Customers c
+                JOIN Loans l ON l.CustomerID = c.CustomerID
+                WHERE TRUNC(MONTHS_BETWEEN(SYSDATE, c.DOB) / 12) > 60
+            ) LOOP
+                UPDATE Loans
+                SET InterestRate = InterestRate * 0.99
+                WHERE LoanID = loan_rec.LoanID;
+            END LOOP;
 
-            for cusId in (select id from customer where age>60) loop
-
-                update customer
-                set interest=interest*0.99
-                where id=cusId
-
-            end loop
-
-            commit
-
-        end
+            COMMIT;
+        END;
 
 
 
@@ -31,17 +32,17 @@ Scenario 2:
 
     Answer:
 
-    begin 
+    BEGIN
+        FOR cus IN (
+            SELECT CustomerID FROM Customers WHERE Balance > 10000
+        ) LOOP
+            UPDATE Customers
+            SET IsVIP = 'Y'
+            WHERE CustomerID = cus.CustomerID;
+        END LOOP;
 
-        for cusId in (select id from customers where balance>10000) loop
-
-            update customers
-            set IsVIP=TRUE
-            where id=cusId
-
-        end loop
-
-    end
+        COMMIT;
+    END;
 
 
 Scenario 3: 
@@ -55,9 +56,11 @@ Scenario 3:
         DECLARE
 
             CURSOR loan_cursor IS
-                SELECT customer_name, loan_id, due_date
-                FROM loans
-                WHERE due_date BETWEEN SYSDATE AND SYSDATE + 30;
+                SELECT c.name as customer_name, l.loanId as loan_id, l.endDate as due_date
+                FROM loans l
+                JOIN Customers c
+                on c.CustomerID=l.CustomerID
+                WHERE l.endDate BETWEEN SYSDATE AND SYSDATE + 30;
 
         begin
             FOR loan_rec IN loan_cursor LOOP
