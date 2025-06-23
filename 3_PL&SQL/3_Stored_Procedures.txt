@@ -1,0 +1,85 @@
+Exercise 3: Stored Procedures
+
+Scenario 1: 
+    The bank needs to process monthly interest for all savings accounts.
+
+    Question: 
+    Write a stored procedure ProcessMonthlyInterest that calculates and updates the balance of all savings accounts by applying an interest rate of 1% to the current balance.
+
+
+    Answer: 
+
+        CREATE OR REPLACE PROCEDURE ProcessMonthlyInterest IS
+        BEGIN
+            UPDATE Accounts
+            SET Balance = Balance + (Balance * 0.01)
+            WHERE AccountType = 'Savings';
+
+            COMMIT;
+        END;
+
+    
+
+Scenario 2: 
+    The bank wants to implement a bonus scheme for employees based on their performance.
+
+    Question: 
+    Write a stored procedure UpdateEmployeeBonus that updates the salary of employees in a given department by adding a bonus percentage passed as a parameter.
+
+    Answer:
+
+    CREATE OR REPLACE PROCEDURE UpdateEmployeeBonus (
+        p_depart IN VARCHAR2,
+        p_BonusPerc IN NUMBER
+    ) IS
+    BEGIN
+        UPDATE Employees
+        SET Salary = Salary + (Salary * (p_BonusPerc / 100))
+        WHERE Department = p_depart;
+
+        COMMIT;
+    END;
+
+
+Scenario 3: 
+    Customers should be able to transfer funds between their accounts.
+
+    Question: 
+    Write a stored procedure TransferFunds that transfers a specified amount from one account to another, checking that the source account has sufficient balance before making the transfer.
+
+
+    Answer:
+
+    CREATE OR REPLACE PROCEDURE TransferFunds (
+
+        sourceAccountId in NUMBER
+        targetAccountId in NUMBER,
+        amount in NUMBER,
+
+    ) 
+    
+    IS sourceBalance NUMBER;
+
+    BEGIN 
+
+        SELECT Balance INTO sourceBalance
+        FROM Accounts
+        WHERE AccountID=sourceAccountId
+        FOR UPDATE;
+
+        if sourceBalance < amount THEN
+            RAISE_APPLICATION_ERROR(-20001, 'Insufficient funds in the source account.');
+        END IF;
+
+        UPDATE Accounts
+        SET Balance=Balance - amount
+        WHERE AccountID=sourceAccountId
+
+        UPDATE Accounts
+        SET Balance=Balance + amount
+        WHERE AccountID=targetAccountId
+
+        COMMIT
+
+    END
+
