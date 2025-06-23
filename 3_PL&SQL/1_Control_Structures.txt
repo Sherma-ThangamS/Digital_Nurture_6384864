@@ -1,0 +1,70 @@
+Scenario 1: 
+    The bank wants to apply a discount to loan interest rates for customers above 60 years old.
+
+    Question: 
+        Write a PL/SQL block that loops through all customers, checks their age, and if they are above 60, apply a 1% discount to their current loan interest rates.
+
+
+    Answer:
+
+        begin 
+
+            for cusId in (select id from customer where age>60) loop
+
+                update customer
+                set interest=interest*0.99
+                where id=cusId
+
+            end loop
+
+            commit
+
+        end
+
+
+
+Scenario 2: 
+    A customer can be promoted to VIP status based on their balance.
+    
+    Question: 
+        Write a PL/SQL block that iterates through all customers and sets a flag IsVIP to TRUE for those with a balance over $10,000.
+
+    Answer:
+
+    begin 
+
+        for cusId in (select id from customers where balance>10000) loop
+
+            update customers
+            set IsVIP=TRUE
+            where id=cusId
+
+        end loop
+
+    end
+
+
+Scenario 3: 
+    The bank wants to send reminders to customers whose loans are due within the next 30 days.
+
+    Question: 
+        Write a PL/SQL block that fetches all loans due in the next 30 days and prints a reminder message for each customer.
+
+    Answer:
+
+        DECLARE
+
+            CURSOR loan_cursor IS
+                SELECT customer_name, loan_id, due_date
+                FROM loans
+                WHERE due_date BETWEEN SYSDATE AND SYSDATE + 30;
+
+        begin
+            FOR loan_rec IN loan_cursor LOOP
+                DBMS_OUTPUT.PUT_LINE('Reminder: Loan ID ' || loan_rec.loan_id || 
+                                    ' for customer ' || loan_rec.customer_name || 
+                                    ' is due on ' || TO_CHAR(loan_rec.due_date, 'DD-MON-YYYY') || '.');
+            END LOOP;
+        END;
+
+
