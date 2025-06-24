@@ -1,0 +1,40 @@
+Scenario 1: 
+    Group all customer-related procedures and functions into a package.
+    
+    Question: 
+        Create a package CustomerManagement with procedures for adding a new customer, updating customer details, and a function to get customer balance.
+
+    Answer:
+
+        CREATE OR REPLACE PACKAGE CustomerManagement AS
+            PROCEDURE AddCustomer(p_CustomerID NUMBER, p_Name VARCHAR2, p_DOB DATE, p_Balance NUMBER);
+            PROCEDURE UpdateCustomer(p_CustomerID NUMBER, p_Name VARCHAR2, p_DOB DATE, p_Balance NUMBER);
+            FUNCTION GetCustomerBalance(p_CustomerID NUMBER) RETURN NUMBER;
+        END CustomerManagement;
+
+
+Scenario 2: 
+    Create a package to manage employee data.
+
+    Question:  
+        Write a package EmployeeManagement with procedures to hire new employees, update employee details, and a function to calculate annual salary.
+
+    Answer:
+        CREATE OR REPLACE PACKAGE EmployeeManagement AS
+            PROCEDURE HireEmployee(p_EmployeeID NUMBER, p_Name VARCHAR2, p_Position VARCHAR2, p_Salary NUMBER, p_Department VARCHAR2);
+            PROCEDURE UpdateEmployee(p_EmployeeID NUMBER, p_Name VARCHAR2, p_Position VARCHAR2, p_Salary NUMBER, p_Department VARCHAR2);
+            FUNCTION CalculateAnnualSalary(p_EmployeeID NUMBER) RETURN NUMBER;
+        END EmployeeManagement;
+
+Scenario 3: 
+    Group all account-related operations into a package.
+
+    Question: 
+        Create a package AccountOperations with procedures for opening a new account, closing an account, and a function to get the total balance of a customer across all accounts.
+
+    Answer:
+        CREATE OR REPLACE PACKAGE AccountOperations AS
+            PROCEDURE OpenAccount(p_AccountID NUMBER, p_CustomerID NUMBER, p_AccountType VARCHAR2, p_Balance NUMBER);
+            PROCEDURE CloseAccount(p_AccountID NUMBER);
+            FUNCTION GetTotalCustomerBalance(p_CustomerID NUMBER) RETURN NUMBER;
+        END AccountOperations;
